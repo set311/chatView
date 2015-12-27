@@ -22,15 +22,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 @interface ChatViewController ()
 
 @property (nonatomic, strong) NSMutableArray *messages;
-
-@property (nonatomic, strong) NSArray *users;
-@property (nonatomic, strong) NSArray *channels;
-@property (nonatomic, strong) NSArray *emojis;
-
-@property (nonatomic, strong) NSArray *searchResult;
-@property (nonatomic, strong) UIWindow *pipWindow;
-
-@property (nonatomic, strong) MJRefreshHeaderView *head;
+@property (nonatomic, strong) MJRefreshFooterView *head;
 
 @end
 
@@ -66,7 +58,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[MessageTextView class]];
-    [self addRefreshViews];
+    
     
 #if DEBUG_CUSTOM_TYPING_INDICATOR
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
@@ -82,6 +74,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addRefreshViews];
     
     // Example's configuration
     [self configureDataSource];
@@ -91,7 +84,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.shakeToClearEnabled = YES;
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = NO;
+    self.inverted = YES;
     
     [self.leftButton setImage:[UIImage imageNamed:@"icn_upload"] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
@@ -130,11 +123,10 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         [array addObject:message];
     }
     
-    //NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
     
-    self.messages = [[NSMutableArray alloc] initWithArray:array];
+    self.messages = [[NSMutableArray alloc] initWithArray:reversed];
     
-    self.users = @[@"Allen", @"Anna", @"Alicia", @"Arnold", @"Armando", @"Antonio", @"Brad", @"Catalaya", @"Christoph", @"Emerson", @"Eric", @"Everyone", @"Steve"];
 }
 
 
@@ -318,10 +310,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 {
     __weak typeof(self) weakSelf = self;
     
-    //load more
-    int pageNum = 3;
-    
-    self.head = [MJRefreshHeaderView header];
+    self.head = [MJRefreshFooterView footer];
     self.head .scrollView = self.tableView;
     self.head .beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
         
@@ -336,18 +325,20 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
             [array addObject:message];
         }
         
-        //NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+        NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
         
-        NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
-                               NSMakeRange(0,[array count])];
-        [weakSelf.messages insertObjects:array atIndexes:indexes];
+        //NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
+                               //NSMakeRange(0,[array count])];
+        //[weakSelf.messages insertObjects:array atIndexes:indexes];
         
+        [weakSelf.messages addObjectsFromArray:reversed];
+
          int pageNum = 3;
         if (weakSelf.messages.count > pageNum) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
+            //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
-                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                //[weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
             });
         }
         [weakSelf.head endRefreshing];
