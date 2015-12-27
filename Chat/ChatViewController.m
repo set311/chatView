@@ -112,9 +112,16 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 - (void)configureDataSource
 {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSArray *reversed = [self createMessage:8];
+    self.messages = [[NSMutableArray alloc]
+                      initWithArray:reversed];
     
-    for (int i = 0; i < 2; i++) {
+}
+
+- (NSArray*) createMessage:(int) numberOfMessages{
+
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 10; i++) {
         NSInteger words = (arc4random() % 40)+1;
         
         Message *message = [Message new];
@@ -122,11 +129,9 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         message.text = [LoremIpsum wordsWithNumber:words];
         [array addObject:message];
     }
-    
     NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    
-    self.messages = [[NSMutableArray alloc] initWithArray:reversed];
-    
+
+    return reversed;
 }
 
 
@@ -314,18 +319,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.head .scrollView = self.tableView;
     self.head .beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
         
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        
-        for (int i = 0; i < 3; i++) {
-            NSInteger words = (arc4random() % 40)+1;
-            
-            Message *message = [Message new];
-            message.username = [LoremIpsum name];
-            message.text = [LoremIpsum wordsWithNumber:words];
-            [array addObject:message];
-        }
-        
-        NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+         NSArray *reversed = [weakSelf createMessage:8];
         
         //NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
                                //NSMakeRange(0,[array count])];
