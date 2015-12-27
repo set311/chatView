@@ -11,6 +11,7 @@
 #import "MessageTextView.h"
 #import "TypingIndicatorView.h"
 #import "Message.h"
+#import "MJRefresh.h"
 
 #import <LoremIpsum/LoremIpsum.h>
 
@@ -29,8 +30,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 @property (nonatomic, strong) NSArray *searchResult;
 @property (nonatomic, strong) UIWindow *pipWindow;
 
-@property (nonatomic, assign) BOOL checkForRefresh;
-@property (nonatomic, assign) BOOL reloading;
+@property (nonatomic, strong) MJRefreshHeaderView *head;
 
 @end
 
@@ -66,6 +66,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[MessageTextView class]];
+    [self addRefreshViews];
     
 #if DEBUG_CUSTOM_TYPING_INDICATOR
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
@@ -90,7 +91,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.shakeToClearEnabled = YES;
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = YES;
+    self.inverted = NO;
     
     [self.leftButton setImage:[UIImage imageNamed:@"icn_upload"] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
@@ -129,9 +130,9 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         [array addObject:message];
     }
     
-    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+    //NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
     
-    self.messages = [[NSMutableArray alloc] initWithArray:reversed];
+    self.messages = [[NSMutableArray alloc] initWithArray:array];
     
     self.users = @[@"Allen", @"Anna", @"Alicia", @"Arnold", @"Armando", @"Antonio", @"Brad", @"Catalaya", @"Christoph", @"Emerson", @"Eric", @"Everyone", @"Steve"];
 }
@@ -184,8 +185,6 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
     
-    // Fixes the cell from blinking (because of the transform, when using translucent cells)
-    // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [super didPressRightButton:sender];
@@ -309,121 +308,50 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 #pragma mark - UIScrollViewDelegate Methods
 
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    [super scrollViewDidScroll:scrollView];
+//}
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+
+- (void)addRefreshViews
 {
-    if (!self.reloading)
-    {
-        self.checkForRefresh = YES;  //  only check offset when dragging
-    }
-}
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.reloading) return;
+    __weak typeof(self) weakSelf = self;
     
-    if (self.checkForRefresh) {
-             if (scrollView.contentOffset.y >= -65.0f &&
-                 scrollView.contentOffset.y <=  0.0f &&
-                 !self.reloading)
-            {
-                NSLog(@"pull ");
-            
-        } else if ( scrollView.contentOffset.y <= -65.0f) {
-            
-            NSLog(@" release finish reload ");
-        }
-    }
+    //load more
+    int pageNum = 3;
     
-    [super scrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [super scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-
-    if (self.reloading) return;
-    
-    if (scrollView.contentOffset.y <= - 65.0f) {
-            NSLog(@"reload");
-            [self showReloadAnimationAnimated:YES];
-            [self reloadTableViewDataSource];
-        }
-    self.checkForRefresh = NO;
-}
-
-
-#pragma mark State Changes
-
-- (void) showReloadAnimationAnimated:(BOOL)animated
-{
-    self.reloading = YES;
-    
-    if (animated)
-    {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        self.tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f,
-                                                       0.0f);
-        [UIView commitAnimations];
-    }
-    else
-    {
-        self.tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f,
-                                                       0.0f);
-    }
-}
-
-- (void) reloadTableViewDataSource
-{
-    self.reloading = YES;
-    [self loadLocalChat];
-}
-- (void)dataSourceDidFinishLoadingNewData
-{
-    self.reloading = NO;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:.3];
-    [self.tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
-    [UIView commitAnimations];
-}
-
-- ( void) loadLocalChat{
-
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < 3; i++) {
-        NSInteger words = (arc4random() % 40)+1;
+    self.head = [MJRefreshHeaderView header];
+    self.head .scrollView = self.tableView;
+    self.head .beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
         
-        Message *message = [Message new];
-        message.username = [LoremIpsum name];
-        message.text = [LoremIpsum wordsWithNumber:words];
-        [array addObject:message];
-    }
-    
-   NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    
-    [self.messages addObjectsFromArray:reversed];
-//     NSMutableArray *insertIndexPaths = [[NSMutableArray alloc] init];
-//        for (int i = 0; i < reversed.count; i++) {
-//          NSIndexPath *newPath = [NSIndexPath indexPathForRow:i inSection:0];
-//            [insertIndexPaths addObject:newPath];
-//    }
-//     [self.tableView beginUpdates];
-//     [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationTop];
-//     [self.tableView endUpdates];
-    
-    
-    NSIndexPath *path = [NSIndexPath indexPathForRow:[self.messages count] - 1 inSection:0];
-    NSArray *paths = [NSArray arrayWithObject:path];
-    
-    [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationTop];
-                                                      
-    [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    
-    [self dataSourceDidFinishLoadingNewData];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        
+        for (int i = 0; i < 3; i++) {
+            NSInteger words = (arc4random() % 40)+1;
+            
+            Message *message = [Message new];
+            message.username = [LoremIpsum name];
+            message.text = [LoremIpsum wordsWithNumber:words];
+            [array addObject:message];
+        }
+        
+        //NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
+        
+        [weakSelf.messages addObjectsFromArray:array];
+        
+         int pageNum = 3;
+        if (weakSelf.messages.count > pageNum) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            });
+        }
+        [weakSelf.head endRefreshing];
+    };
 }
+
 
 #pragma mark - Lifeterm
 
