@@ -319,20 +319,33 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.head .scrollView = self.tableView;
     self.head .beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
         
-         NSArray *reversed = [weakSelf createMessage:8];
-        
-        //NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
-                               //NSMakeRange(0,[array count])];
-        //[weakSelf.messages insertObjects:array atIndexes:indexes];
-        
+        int numberOfMessagesBefore = self.messages.count -1 ;
+        NSArray *reversed = [weakSelf createMessage:8];
         [weakSelf.messages addObjectsFromArray:reversed];
-
+        int numberOfMessagesAfter = self.messages.count -1 ;
+        NSMutableArray *insertIndexPaths = [[NSMutableArray alloc] init];
+        
+        for (int i = numberOfMessagesBefore; i < numberOfMessagesAfter; i++) {
+            NSIndexPath *newPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [insertIndexPaths addObject:newPath];
+        }
+        
          int pageNum = 3;
         if (weakSelf.messages.count > pageNum) {
-            //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
+
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.tableView reloadData];
+                
+                //[weakSelf.tableView reloadData];
                 //[weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                
+                [UIView setAnimationsEnabled:NO];
+                [weakSelf.tableView beginUpdates];
+                
+                [weakSelf.tableView insertRowsAtIndexPaths:insertIndexPaths
+                                      withRowAnimation:UITableViewRowAnimationNone];
+                
+                [weakSelf.tableView endUpdates];
+                [UIView setAnimationsEnabled:YES];
             });
         }
         [weakSelf.head endRefreshing];
