@@ -121,7 +121,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 2; i++) {
         NSInteger words = (arc4random() % 40)+1;
         
         Message *message = [Message new];
@@ -338,7 +338,9 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         
         //NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
         
-        [weakSelf.messages addObjectsFromArray:array];
+        NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
+                               NSMakeRange(0,[array count])];
+        [weakSelf.messages insertObjects:array atIndexes:indexes];
         
          int pageNum = 3;
         if (weakSelf.messages.count > pageNum) {
