@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70D1CBB8ABFED00B046C59D9 /* libPods-Chat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06884CD949B939FB5B8E0874 /* libPods-Chat.a */; };
+		A6899B0B1C2F7001000470CB /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6899B0A1C2F7001000470CB /* ChatViewController.m */; };
+		A6899B151C2F75DB000470CB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = A6899B0E1C2F75DB000470CB /* Message.m */; };
+		A6899B161C2F75DB000470CB /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6899B101C2F75DB000470CB /* MessageTableViewCell.m */; };
+		A6899B171C2F75DB000470CB /* MessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6899B121C2F75DB000470CB /* MessageTextView.m */; };
+		A6899B181C2F75DB000470CB /* TypingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6899B141C2F75DB000470CB /* TypingIndicatorView.m */; };
 		A6C6A4791C2E4ABB00BB8F3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C6A4781C2E4ABB00BB8F3E /* main.m */; };
 		A6C6A47C1C2E4ABB00BB8F3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C6A47B1C2E4ABB00BB8F3E /* AppDelegate.m */; };
 		A6C6A47F1C2E4ABB00BB8F3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C6A47E1C2E4ABB00BB8F3E /* ViewController.m */; };
@@ -16,6 +22,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06884CD949B939FB5B8E0874 /* libPods-Chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		07EE5C628ED3C126E462EAC7 /* Pods-Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat/Pods-Chat.debug.xcconfig"; sourceTree = "<group>"; };
+		6739BCCFE9E70F95379BD775 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Chat/Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
+		A6899B091C2F7001000470CB /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		A6899B0A1C2F7001000470CB /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		A6899B0D1C2F75DB000470CB /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		A6899B0E1C2F75DB000470CB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		A6899B0F1C2F75DB000470CB /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		A6899B101C2F75DB000470CB /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
+		A6899B111C2F75DB000470CB /* MessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTextView.h; sourceTree = "<group>"; };
+		A6899B121C2F75DB000470CB /* MessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTextView.m; sourceTree = "<group>"; };
+		A6899B131C2F75DB000470CB /* TypingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingIndicatorView.h; sourceTree = "<group>"; };
+		A6899B141C2F75DB000470CB /* TypingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypingIndicatorView.m; sourceTree = "<group>"; };
 		A6C6A4741C2E4ABB00BB8F3E /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6C6A4781C2E4ABB00BB8F3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6C6A47A1C2E4ABB00BB8F3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -33,17 +52,54 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70D1CBB8ABFED00B046C59D9 /* libPods-Chat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B249DA8DB4CF78136822587 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07EE5C628ED3C126E462EAC7 /* Pods-Chat.debug.xcconfig */,
+				6739BCCFE9E70F95379BD775 /* Pods-Chat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4ACC5E2E0FD9C6E7EE10A8EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06884CD949B939FB5B8E0874 /* libPods-Chat.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A6899B0C1C2F7417000470CB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A6899B0D1C2F75DB000470CB /* Message.h */,
+				A6899B0E1C2F75DB000470CB /* Message.m */,
+				A6899B0F1C2F75DB000470CB /* MessageTableViewCell.h */,
+				A6899B101C2F75DB000470CB /* MessageTableViewCell.m */,
+				A6899B111C2F75DB000470CB /* MessageTextView.h */,
+				A6899B121C2F75DB000470CB /* MessageTextView.m */,
+				A6899B131C2F75DB000470CB /* TypingIndicatorView.h */,
+				A6899B141C2F75DB000470CB /* TypingIndicatorView.m */,
+				A6899B091C2F7001000470CB /* ChatViewController.h */,
+				A6899B0A1C2F7001000470CB /* ChatViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
 		A6C6A46B1C2E4ABB00BB8F3E = {
 			isa = PBXGroup;
 			children = (
 				A6C6A4761C2E4ABB00BB8F3E /* Chat */,
 				A6C6A4751C2E4ABB00BB8F3E /* Products */,
+				0B249DA8DB4CF78136822587 /* Pods */,
+				4ACC5E2E0FD9C6E7EE10A8EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +114,7 @@
 		A6C6A4761C2E4ABB00BB8F3E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A6899B0C1C2F7417000470CB /* ViewController */,
 				A6C6A47A1C2E4ABB00BB8F3E /* AppDelegate.h */,
 				A6C6A47B1C2E4ABB00BB8F3E /* AppDelegate.m */,
 				A6C6A47D1C2E4ABB00BB8F3E /* ViewController.h */,
@@ -86,9 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A6C6A48B1C2E4ABB00BB8F3E /* Build configuration list for PBXNativeTarget "Chat" */;
 			buildPhases = (
+				10CBFE40B9E7F0FD2539DC1A /* Check Pods Manifest.lock */,
 				A6C6A4701C2E4ABB00BB8F3E /* Sources */,
 				A6C6A4711C2E4ABB00BB8F3E /* Frameworks */,
 				A6C6A4721C2E4ABB00BB8F3E /* Resources */,
+				A33A45880405A579872B0C11 /* Embed Pods Frameworks */,
+				C6EA68D67DA41665CB0DA660 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -144,6 +204,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		10CBFE40B9E7F0FD2539DC1A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A33A45880405A579872B0C11 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Chat/Pods-Chat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6EA68D67DA41665CB0DA660 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Chat/Pods-Chat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A6C6A4701C2E4ABB00BB8F3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -151,7 +259,12 @@
 			files = (
 				A6C6A47F1C2E4ABB00BB8F3E /* ViewController.m in Sources */,
 				A6C6A47C1C2E4ABB00BB8F3E /* AppDelegate.m in Sources */,
+				A6899B151C2F75DB000470CB /* Message.m in Sources */,
+				A6899B181C2F75DB000470CB /* TypingIndicatorView.m in Sources */,
+				A6899B0B1C2F7001000470CB /* ChatViewController.m in Sources */,
 				A6C6A4791C2E4ABB00BB8F3E /* main.m in Sources */,
+				A6899B171C2F75DB000470CB /* MessageTextView.m in Sources */,
+				A6899B161C2F75DB000470CB /* MessageTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +372,7 @@
 		};
 		A6C6A48C1C2E4ABB00BB8F3E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07EE5C628ED3C126E462EAC7 /* Pods-Chat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Chat/Info.plist;
@@ -270,6 +384,7 @@
 		};
 		A6C6A48D1C2E4ABB00BB8F3E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6739BCCFE9E70F95379BD775 /* Pods-Chat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Chat/Info.plist;
@@ -298,6 +413,7 @@
 				A6C6A48D1C2E4ABB00BB8F3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
