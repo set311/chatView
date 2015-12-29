@@ -127,6 +127,8 @@
 }
 
 
+
+
 #pragma mark - TypingIndicatorView
 
 - (void)presentIndicatorWithName:(NSString *)name image:(UIImage *)image

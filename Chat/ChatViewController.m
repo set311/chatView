@@ -104,6 +104,14 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 }
 
 
+-(void) viewWillDisappear:(BOOL)animated{
+
+    [self dismissKeyboard:NO];
+
+    [super viewWillDisappear:animated];
+    
+}
+
 - (void)configureDataSource {
     NSArray *reversed = [self createMessage:8];
     self.messages = [[NSMutableArray alloc] initWithArray:reversed];

@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "ChatViewController.h"
 
 @interface ViewController ()
+
+@property(nonatomic, strong) IBOutlet UITableView *tableView;
+@property(nonatomic, strong) ChatViewController *chatView;
 
 @end
 
@@ -16,12 +20,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    
+    self.chatView = [ChatViewController new];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return 7 ;
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = (UITableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+        cell.textLabel.text = @"11";
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [self.navigationController pushViewController:self.chatView animated:YES];
+}
+
+
+
+
 
 @end
